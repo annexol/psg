@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ title }}</title>
+    <link type="text/css" href="{% static 'apps/css/styles.css' %}" rel="stylesheet"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="shortcut icon"
+          href="https://w7.pngwing.com/pngs/179/915/png-transparent-computer-icons-windows-8-microsoft-blue-angle-text.png"
+          type="image/x-icon"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<table class="table-page" border=0 cellpadding="0" cellspacing="0">
+    <tr>
+        <td valign=top>
+            {% block mainmenu %}
+            <div class="header">
+                <ul id="mainmenu" class="mainmenu">
+                    <li><a href="{% url 'apps' %}">Home</a></li>
+                    {% if page_obj.has_other_pages %}
+                    <form action="{% url 'apps' %}" method="get">
+                        <li> | <a href="?page=1&paginateby=10&orderby={{ orderby }}">Paginate by 10</a></li>
+                        <li> | <a href="?page=1&paginateby=20&orderby={{ orderby }}">Paginate by 20</a></li>
+                    </form>
+                    {% endif %}
+                </ul>
+                <div class="clear"></div>
+            </div>
+            {% endblock mainmenu %}
+
+            <div class="content-text">
+                {% block content %}
+                {% endblock %}
+            </div>
+
+

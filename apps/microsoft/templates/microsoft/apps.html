@@ -1,0 +1,63 @@
+{% extends 'microsoft/base.html' %}
+{% block content%}
+
+<form action="{% url 'filter_apps'%}">
+    <input name="usertext">&nbsp<input class="button" type="submit" value="Enter">
+</form>
+<br>
+
+<ul class="list-articles">
+    <table border="2" cellpadding="10px">
+        <tr>
+            <th>Name</th>
+            <th>
+
+                Realise year
+                <a href="?page=1&paginateby={{ paginate_by }}&orderby=release_year">ᐃ</a>
+                <a href="?page=1&paginateby={{ paginate_by }}&orderby=-release_year">ᐁ</a>
+
+            </th>
+            <th>Company name</th>
+            <th>Email</th>
+        </tr>
+        {% for i in apps %}
+
+        <tr>
+            <td>{{i.name}}</td>
+            <td>{{i.release_year}}</td>
+            <td>{{i.company_name}}</td>
+            <td>{{i.email}}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</ul>
+
+
+{% if page_obj.has_other_pages %}
+<nav class="list-pages">
+    <ul>
+        {% if page_obj.has_previous %}
+        <li class="page-num">
+            <a href="?page={{ page_obj.previous_page_number}}&paginateby={{paginate_by}}&orderby={{orderby}}">&lt;</a>
+        </li>
+        {% endif %}
+        {% for p in page_obj.paginator.page_range %}
+        {% if page_obj.number == p %}
+        <li class="page-num">{{ p }}</li>
+        {% elif p >= page_obj.number|add:-2 and p <= page_obj.number|add:2 %}
+        <li class="page-num">
+            <a href="?page={{ p }}&paginateby={{ paginate_by }}&orderby={{ orderby }}">{{ p }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+        <li class="page-num">
+            <a href="?page={{ page_obj.next_page_number }}&paginateby={{ paginate_by }}&orderby={{ orderby }}">&gt;</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+{% endif %}
+
+
+{% endblock %}

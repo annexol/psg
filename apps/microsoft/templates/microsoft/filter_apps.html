@@ -1,0 +1,37 @@
+{% extends 'microsoft/base.html' %}
+{% block content%}
+
+
+<form action="{% url 'filter_apps'%}">
+    <input name="usertext">&nbsp<input class="button" type="submit" value="Enter">
+</form>
+<br>
+
+{% if filter_apps %}
+
+<ul class="list-articles">
+    <table border="2" cellpadding="10px">
+        <tr>
+            <th>Name</th>
+            <th>Company name</th>
+            <th>Realise year</th>
+            <th>Email</th>
+        </tr>
+        {% for i in filter_apps %}
+
+        <tr>
+            <td>{{i.name}}</td>
+            <td>{{i.release_year}}</td>
+            <td>{{i.company_name}}</td>
+            <td>{{i.email}}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</ul>
+<br>
+{% else %}
+<h3>None</h3>
+{% endif %}
+
+{% endblock %}
